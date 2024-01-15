@@ -1,6 +1,8 @@
 import prismadb from "@/lib/prismadb";
 
 import { CategoryForm } from "./components/category-form";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 const CategoryPage = async ({
   params,
@@ -24,7 +26,9 @@ const CategoryPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryForm billboards={billboards} initialData={category} />
+        <Suspense fallback={<Loading />}>
+          <CategoryForm billboards={billboards} initialData={category} />
+        </Suspense>
       </div>
     </div>
   );

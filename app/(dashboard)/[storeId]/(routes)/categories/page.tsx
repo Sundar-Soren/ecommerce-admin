@@ -4,6 +4,8 @@ import prismadb from "@/lib/prismadb";
 
 import { CategoryColumn } from "./components/columns";
 import { CategoriesClient } from "./components/client";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   const categories = await prismadb.category.findMany({
@@ -28,7 +30,9 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoriesClient data={formattedCategories} />
+        <Suspense fallback={<Loading />}>
+          <CategoriesClient data={formattedCategories} />
+        </Suspense>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import prismadb from "@/lib/prismadb";
 
 import { SizeColumn } from "./components/columns";
 import { SizesClient } from "./components/client";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const SizesPage = async ({ params }: { params: { storeId: string } }) => {
   const sizes = await prismadb.size.findMany({
@@ -25,7 +27,9 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <SizesClient data={formattedSizes} />
+        <Suspense fallback={<Loading />}>
+          <SizesClient data={formattedSizes} />
+        </Suspense>
       </div>
     </div>
   );
